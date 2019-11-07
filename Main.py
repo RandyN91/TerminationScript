@@ -21,7 +21,7 @@ for row in rows:
 
             tablelist.append(value)
 
-del tablelist[:10]
+del tablelist[:9]
 
 def divide_chunks(l, n):
 
