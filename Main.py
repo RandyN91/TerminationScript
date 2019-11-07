@@ -23,6 +23,8 @@ for row in rows:
 
 del tablelist[:9]
 
+#https://www.geeksforgeeks.org/iterate-over-a-list-in-python/
+
 def divide_chunks(l, n):
 
     for i in range(0, len(l), n):
