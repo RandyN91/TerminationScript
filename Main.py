@@ -8,7 +8,6 @@ tables = soup.findChildren('table')
 my_table = tables[1]
 rows = my_table.findChildren(['th', 'tr'])
 
-
 for row in rows:
         cells = row.findChildren('td')
 
@@ -19,7 +18,6 @@ for row in rows:
             tablelist.append(value)
 
 del tablelist[:9]
-
 
 #https://www.geeksforgeeks.org/iterate-over-a-list-in-python/
 
