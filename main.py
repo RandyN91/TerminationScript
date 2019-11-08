@@ -1,6 +1,5 @@
 import bs4
 
-
 file = open('report.html')
 tablelist = []
 soup = bs4.BeautifulSoup(file,features="lxml")
@@ -23,11 +22,10 @@ del tablelist[:9]
 
 def divide_chunks(l, n):
 
-    for i in range(0, len(l), n):
+    for i in range(0, len(l), 9):
         yield l[i:i + n]
 
-n = 9
-dividedlist = list(divide_chunks(tablelist, n))
+dividedlist = list(divide_chunks(tablelist, 9))
 
 for i in dividedlist:
     print(i)
