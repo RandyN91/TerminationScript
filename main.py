@@ -50,8 +50,6 @@ def adsearching(input):
         base_dn="DC=jetblue,DC=com"
     )
 
-# add another AD function to show all user accounts if they are enabled / disabled
-
     for row in q.get_results():
 
         EmployeeID = (row['employeeID'])
@@ -81,3 +79,4 @@ def adsearching(input):
 print("Output\n")
 
 adsearching(dividedlist)
+
