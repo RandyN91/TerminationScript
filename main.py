@@ -57,9 +57,9 @@ dividedlist = list(divide_chunks(tablelist, 9))
 #print(dividedlist)
 
 def adsearching(input):
- try:
-  for i in input:
 
+  for i in input:
+   try:
     q = pyad.adquery.ADQuery()
     usrid = i[1]
     nusrid = str("employeeID =" +usrid)
@@ -100,10 +100,10 @@ def adsearching(input):
             except Exception as e:
                 print("Error " + e + " account likely doesnt exist or was deleted")
 
- except ValueError as e :
+   except Exception as e :
      print("Error "+str(e)+" in user "+Name+" Check HTML and AD Manually")
      file.write("\nError "+str(e)+" in user "+Name+" Check HTML and AD Manually")
-
+     pass
 #Script Terminal Output
 
 print("Output : \n")
