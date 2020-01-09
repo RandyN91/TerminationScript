@@ -3,6 +3,8 @@ import pyad
 from datetime import  datetime as dt
 import time
 
+# to compile to EXE run "python -m auto_py_to_exe" in terminal (need library)
+
 from pyad import pyadutils, adquery
 
 htmlfile = open(input("\nPlease Enter the HR Report Path : "))
