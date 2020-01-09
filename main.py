@@ -7,7 +7,7 @@ import time
 
 from pyad import pyadutils, adquery
 
-htmlfile = open(input("\nPlease Enter the HR Report Path : "))
+htmlfile = open(input("\nPlease Enter the HR Report Path (.htm extension only) : "))
 
 file = open("AD_ScriptOutput_"+dt.now().strftime("%d-%m-%Y_%I-%M-%S_%p") +".txt", "w")
 
