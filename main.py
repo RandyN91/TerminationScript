@@ -32,7 +32,7 @@ def parseHTML(input):
  tables = soup.findChildren('table')
 
  for tables in tables:
-  #my_table = tables[i]
+  #iterate table objects
 
   rows = tables.findChildren(['th', 'tr'])
 
@@ -45,20 +45,19 @@ def parseHTML(input):
 
 parseHTML(htmlfile)
 
+# after all possible cells in all tables are in a big list, we remove the first few which include the report name,date etc
+
 del tablelist[:13]
-#print(tablelist)
+
 def divide_chunks(l, n):
-    # https://www.geeksforgeeks.org/iterate-over-a-list-in-python/
     # this cuts the list of elements from the HTML table and extracts the rows since table data spans 9 columns
     for i in range(0, len(l), 9):
         yield l[i:i + n]
 
 dividedlist = list(divide_chunks(tablelist, 9))
 
-#print(dividedlist)
-
 def adsearching(input):
-
+#Core Script function, takes the input of dividedlist , called below to query AD and return the last login and diff the dates from the report to AD
   for i in input:
    try:
     q = pyad.adquery.ADQuery()
@@ -79,9 +78,6 @@ def adsearching(input):
         Name = (row['mailNickname'])
         LastLogonDate = LastLogon.strftime('%m/%d/%Y')
         ActStatus = (row['userAccountControl'])
-        #print(type(LastLogonDate))
-        #print(Name, EmployeeID, LastLogonDate)
-
 
         for i in dividedlist:
 
