@@ -7,7 +7,7 @@ import time
 
 from pyad import pyadutils, adquery
 
-htmlfile = open(input("\nPlease Enter the HR Report Path (.htm extension only) : "))
+htmlfile = open(input("\nPlease Enter the HR Report Path (.html extension only) : "))
 
 file = open("AD_ScriptOutput_"+dt.now().strftime("%d-%m-%Y_%I-%M-%S_%p") +".txt", "w")
 
@@ -45,19 +45,25 @@ def parseHTML(input):
 
 parseHTML(htmlfile)
 
-# after all possible cells in all tables are in a big list, we remove the first few which include the report name,date etc
+# after all possible cells from all tables are in one list, we remove the first few cells which include the report name,date etc
 
 del tablelist[:13]
 
 def divide_chunks(l, n):
-    # this cuts the list of elements from the HTML table and extracts the rows since table data spans 9 columns
+    # this now cuts the list of elements from the HTML table and extracts the rows in chunks of 9 elements,
+    # since table data spans 9 columns and the data is static.
+
     for i in range(0, len(l), 9):
         yield l[i:i + n]
 
 dividedlist = list(divide_chunks(tablelist, 9))
 
-def adsearching(input):
-#Core Script function, takes the input of dividedlist , called below to query AD and return the last login and diff the dates from the report to AD
+#dividedlist is a list where each item is a list of 9 elements , essentially the rows we just extracted
+
+def ADsearch(input):
+#This reads the dividedlist and extracts the Users ID then queries AD to return the last login, account status
+# and if the account had attempted login after the termination date. Warranting further investigation.
+
   for i in input:
    try:
     q = pyad.adquery.ADQuery()
@@ -88,12 +94,13 @@ def adsearching(input):
           if timediff.days > 0:
            print("User " + Name + " Was Terminated on "+str(i[7])+" and last logged in on "+LastLogonDate+" which is "+str(timediff.days)+" days after his termination")
            file.write("\nUser " + Name + " Was Terminated on " + str(i[7]) + " and last logged in on " + LastLogonDate + " which is " + str(timediff.days) + " days after his termination.")
+
         for i in dividedlist:
 
             try:
-                if EmployeeID in i:
-                    print("User " + Name + " account is " + accountStatus(ActStatus))
-                    file.write("\nUser " + Name + " account is " + accountStatus(ActStatus))
+              if EmployeeID in i:
+                print("User " + Name + " account is " + accountStatus(ActStatus))
+                file.write("\nUser " + Name + " account is " + accountStatus(ActStatus))
             except Exception as e:
                 print("Error " + e + " account likely doesnt exist or was deleted")
 
@@ -105,10 +112,10 @@ def adsearching(input):
 
 print("Output : \n")
 
-adsearching(dividedlist)
+ADsearch(dividedlist)
 
 file.close()
 
 print("\nScript Complete. Close window to generate file. File output will be saved in working directory.")
-
+print("\nThis window will close in 200 Seconds....")
 time.sleep(200)
